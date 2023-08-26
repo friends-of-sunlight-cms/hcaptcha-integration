@@ -30,6 +30,8 @@ class ConfigAction extends BaseConfigAction
 
     private function createInput(string $type, string $name, $attributes = null): string
     {
+        $config = $this->plugin->getConfig();
+
         $attr = [];
         if (is_array($attributes)) {
             foreach ($attributes as $k => $v) {
@@ -41,9 +43,9 @@ class ConfigAction extends BaseConfigAction
             }
         }
         if ($type === 'checkbox') {
-            $result = '<input type="checkbox" name="config[' . $name . ']" value="1"' . implode(' ', $attr) . Form::activateCheckbox($this->plugin->getConfig()->offsetGet($name)) . '>';
+            $result = '<input type="checkbox" name="config[' . $name . ']" value="1"' . implode(' ', $attr) . Form::activateCheckbox($config[$name]) . '>';
         } else {
-            $result = '<input type="' . $type . '" name="config[' . $name . ']" value="' . $this->plugin->getConfig()->offsetGet($name) . '"' . implode(' ', $attr) . '>';
+            $result = '<input type="' . $type . '" name="config[' . $name . ']" value="' . Form::restorePostValue($name, $config[$name], false) . '"' . implode(' ', $attr) . '>';
         }
         return $result;
     }

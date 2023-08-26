@@ -2,13 +2,14 @@
 
 use Sunlight\Core;
 use Sunlight\User;
+use Sunlight\Util\Request;
 
 return function (array $args) {
     if (User::isLoggedIn()) {
         return;
     }
 
-    if (empty($_POST['h-captcha-response'])) {
+    if (empty(Request::post('h-captcha-response'))) {
         $args['value'] = false;
         return;
     }
@@ -16,8 +17,8 @@ return function (array $args) {
     $config = $this->getConfig();
 
     $data = [
-        'secret' => $config['secret_key'],
-        'response' => $_POST['h-captcha-response'],
+        'secret' => _e($config['secret_key']),
+        'response' => Request::post('h-captcha-response'),
         'remoteip' => Core::getClientIp()
     ];
 

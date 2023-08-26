@@ -8,7 +8,7 @@ return function (array $args): void {
     }
 
     $config = $this->getConfig();
-    $content = "<div class='h-captcha' data-sitekey='" . $config['site_key'] . "'" . ($config['dark_mode'] ? ' data-theme="dark"' : '') . "></div>";
+    $content = "<div class='h-captcha' data-sitekey='" . _e($config['site_key']) . "'" . ($config['dark_mode'] ? ' data-theme="dark"' : '') . "></div>";
     $args['value'] = [
         'label' => _lang('captcha.input'),
         'content' => $content,
