@@ -1,0 +1,31 @@
+{
+    "$schema": "../../../system/schema/extend.json",
+    "name": "hCaptcha",
+    "description": "Protect forms by using the https://www.hcaptcha.com/",
+    "version": "1.0.0",
+    "environment": {
+        "system": "^8.0"
+    },
+    "authors": [
+        {"name": "Friends of Sunlight CMS", "url": "https://github.com/friends-of-sunlight-cms/"}
+    ],
+    "config_defaults": {
+        "site_key": null,
+        "secret_key": null,
+        "dark_mode": false
+    },
+    "actions": {
+        "config": "ConfigAction"
+    },
+    "langs": {
+        "hcaptcha": "lang"
+    },
+    "events": [
+        {"event": "core.ready", "script": "event/core_ready.php"},
+        {"event": "captcha.init", "script": "event/captcha_init.php", "group": "hcaptcha"},
+        {"event": "captcha.check", "script": "event/captcha_check.php", "group": "hcaptcha"}
+    ],
+    "events.web": [
+        {"event": "tpl.head", "script": "event/head_assets.php", "group": "hcaptcha"}
+    ]
+}
