@@ -9,44 +9,24 @@ class ConfigAction extends BaseConfigAction
 {
     protected function getFields(): array
     {
+        $config = $this->plugin->getConfig();
+
         return [
             'site_key' => [
                 'label' => _lang('hcaptcha.site_key'),
-                'input' => $this->createInput('text', 'site_key', ['class' => 'inputbig']),
+                'input'=> '<input type="text" name="config[site_key]" value="' . Form::restorePostValue('site_key', $config['site_key'], false) . '" class="inputbig">',
                 'type' => 'text'
             ],
             'secret_key' => [
                 'label' => _lang('hcaptcha.secret_key'),
-                'input' => $this->createInput('text', 'secret_key', ['class' => 'inputbig', 'placeholder' => '0x.....']),
+                'input'=> '<input type="text" name="config[secret_key]" value="' . Form::restorePostValue('secret_key', $config['secret_key'], false) . '" class="inputbig" placeholder="0x....">',
                 'type' => 'text'
             ],
             'dark_mode' => [
                 'label' => _lang('hcaptcha.dark_mode'),
-                'input' => $this->createInput('checkbox', 'dark_mode'),
+                'input' => '<input type="checkbox" name="config[dark_mode]" value="1"' . Form::activateCheckbox($config['dark_mode']) . '>',
                 'type' => 'checkbox'
             ]
         ];
-    }
-
-    private function createInput(string $type, string $name, $attributes = null): string
-    {
-        $config = $this->plugin->getConfig();
-
-        $attr = [];
-        if (is_array($attributes)) {
-            foreach ($attributes as $k => $v) {
-                if (is_int($k)) {
-                    $attr[] = $v . '=' . $v;
-                } else {
-                    $attr[] = $k . '=' . $v;
-                }
-            }
-        }
-        if ($type === 'checkbox') {
-            $result = '<input type="checkbox" name="config[' . $name . ']" value="1"' . implode(' ', $attr) . Form::activateCheckbox($config[$name]) . '>';
-        } else {
-            $result = '<input type="' . $type . '" name="config[' . $name . ']" value="' . Form::restorePostValue($name, $config[$name], false) . '"' . implode(' ', $attr) . '>';
-        }
-        return $result;
     }
 }
