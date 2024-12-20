@@ -10,7 +10,7 @@ class ConfigAction extends BaseConfigAction
 {
     protected function getFields(): array
     {
-        $config = $this->plugin->getConfig();dump(Form::loadCheckbox('dark_mode', $config['dark_mode'], 'config'));
+        $config = $this->plugin->getConfig();
 
         return [
             'site_key' => [
